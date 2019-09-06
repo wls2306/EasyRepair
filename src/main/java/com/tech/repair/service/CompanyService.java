@@ -39,4 +39,15 @@ public class CompanyService {
         }
 
     }
+
+
+    public Company updateCompany(Company c)
+    {
+        logger.info("执行更新Company");
+        if (c.getId()!=0)
+            return companyRepository.save(c);
+        else {
+            return null;
+        }
+    }
 }

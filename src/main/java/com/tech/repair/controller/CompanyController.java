@@ -7,9 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,7 +35,8 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public Company getCompanyByCompanyId(String companyId)
+    @ApiOperation(value ="根据CompanyId单位记录" )
+    public Company getCompanyByCompanyId(@PathVariable("companyId")String companyId)
     {
         /**
          * @Author:Wls
@@ -47,4 +46,17 @@ public class CompanyController {
 
         return (Company) companyService.getCompany(companyId);
     }
+
+    @PutMapping("/")
+    @ApiOperation(value = "更新单位信息")
+    public Company updateCompanyByCompanyId(Company company)
+    {
+        /**
+         * @Author:Wls
+         * @Date:15:22 2019/9/6
+         * @Description: 更新单位信息
+         */
+        return (Company) companyService.
+    }
+
 }
