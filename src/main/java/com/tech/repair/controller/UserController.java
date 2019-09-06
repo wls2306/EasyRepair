@@ -65,7 +65,7 @@ public class UserController {
 
     @PostMapping("/")
     @ApiOperation(value = "添加用户信息")
-    public Object addUser(User user)
+    public Object addUser(User user)throws Exception
     {
         /**
          * @Author:Wls
@@ -76,7 +76,22 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @PutMapping("/{openId}")
+    @PutMapping("/")
+    @ApiOperation(value = "更新用户信息")
+    public User updateUser(User u)throws Exception
+    {
+        /**
+         * @Author:Wls
+         * @Date:13:10 2019/9/6
+         * @Description: 更新用户信息
+         */
+        logger.info("更新用户");
+        return (User) updateUser(u);
+    }
+
+
+
+  /*  @PutMapping("/{openId}")
     @ApiOperation(value = "更新用户当前选择单位",notes = "{\"result\":\"true/false\"}")
     public HashMap updateUserCompany(String userCompanyId, String userOpenId)
     {
@@ -84,5 +99,7 @@ public class UserController {
         logger.info("更新用户当前选择单位");
         map.put("result",userService.updateUserCompanyByUserOpenId(userCompanyId,userOpenId));
         return map;
-    }
+    }*/
+
+
 }

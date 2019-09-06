@@ -62,6 +62,10 @@ spring:
           url-pattern: /*
           # 忽略过滤格式
           exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+
+
+
+
   jpa:
     database: mysql
     hibernate:
@@ -71,5 +75,5 @@ spring:
       properties:
         hibernate:
           format_sql: true
-
+    show-sql: true
 

@@ -3,6 +3,7 @@ package com.tech.repair.service;
 import cn.hutool.core.lang.Console;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tech.repair.pojo.User;
 import com.tech.repair.repository.UserRepository;
 import org.apache.logging.log4j.util.Strings;
@@ -35,7 +36,7 @@ public class UserService {
         /**
          * @Author:Wls
          * @Date:19:50 2019/9/5
-         * @Description:  微信登录模块
+         * @Description:  微信登录
          */
         Map loginMap=new HashMap<String,String>();
         loginMap.put("appid",APPID);
@@ -78,10 +79,17 @@ public class UserService {
 
     }
 
-    public Object addUser(User user)
+    public Object addUser(User user)throws Exception
     {
+        /**
+         * @Author:Wls
+         * @Date:12:36 2019/9/6
+         * @Description: 添加新用户
+         */
         if (user!=null)
         {
+            ObjectMapper mapper=new ObjectMapper();
+            logger.info("添加新用户："+mapper.writeValueAsString(user));
            return userRepository.save(user);
         }else {
             logger.error("用户对象为空！");
@@ -91,14 +99,85 @@ public class UserService {
 
     public boolean updateUserCompanyByUserOpenId(String companyId,String openId)
     {
-        return userRepository.updateUserCompanyByUserOpenId(companyId,openId)>0?true:false;
+        /**
+         * @Author:Wls
+         * @Date:12:33 2019/9/6
+         * @Description: 修改用户选择的单位id
+         */
+        if (Strings.isNotEmpty(companyId)&&Strings.isNotEmpty(openId))
+            return userRepository.updateUserCompanyByUserOpenId(companyId,openId)>0?true:false;
+        else {
+            logger.error("参数错误");
+            return false;
+        }
+
     }
 
     public boolean updateUserRoleByUserOpenId(String userRole,String userOpenId)
     {
-        return userRepository.updateUserRoleByUserOpenId(userRole,userOpenId)>0?true:false;
+        /**
+         * @Author:Wls
+         * @Date:12:32 2019/9/6
+         * @Description:  修改用户角色
+         */
+        if (Strings.isNotEmpty(userRole)&&Strings.isNotEmpty(userOpenId))
+            return userRepository.updateUserRoleByUserOpenId(userRole,userOpenId)>0?true:false;
+        else {
+            logger.error("参数错误");
+            return false;
+        }
     }
 
+
+    public boolean updateUserPhoneByUserOpenId(String userPhone,String userOpenId)
+    {
+        /**
+         * @Author:Wls
+         * @Date:12:32 2019/9/6
+         * @Description: 修改用户联系方式
+         */
+        if (Strings.isNotEmpty(userPhone)&&Strings.isNotEmpty(userOpenId))
+            return userRepository.updateUserRoleByUserOpenId(userPhone,userOpenId)>0?true:false;
+        else {
+            logger.error("参数错误");
+            return false;
+        }
+    }
+
+
+    public boolean updateUserStatusByUserOpenId(String userStatus,String userOpenId)
+    {
+        /**
+         * @Author:Wls
+         * @Date:12:32 2019/9/6
+         * @Description: 修改用户状态
+         */
+        if (Strings.isNotEmpty(userStatus)&&Strings.isNotEmpty(userOpenId))
+            return userRepository.updateUserStatusByUserOpenId(userStatus,userOpenId)>0?true:false;
+        else {
+            logger.error("参数错误");
+            return false;
+        }
+    }
+
+    public User updateUser(User u)throws Exception
+    {
+        /**
+         * @Author:Wls
+         * @Date:13:20 2019/9/6
+         * @Description: 更新用户
+         */
+        logger.info("更新用户信息");
+        if (u!=null)
+        {
+            ObjectMapper mapper=new ObjectMapper();
+            logger.info("更新用户信息："+mapper.writeValueAsString(u));
+           return(User) userRepository.save(u);
+        }else {
+            logger.error("参数错误");
+            return null;
+        }
+    }
 
 
 }
