@@ -40,7 +40,7 @@ public class UserService {
         loginMap.put("secret",APPSECRET);
         loginMap.put("js_code",code);
         loginMap.put("grant_type","authorization_code");
-
+        logger.info("开始执行登录，AppId："+APPID+"Secret："+APPSECRET);
         String result = HttpRequest.get("https://api.weixin.qq.com/sns/jscode2session?")
                 .header(Header.USER_AGENT, "Hutool http")//头信息，多个头信息多次调用此方法即可
                 .form(loginMap)//表单内容
