@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Configuration
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -24,10 +26,10 @@ public class UserService {
     private final Logger logger= LoggerFactory.getLogger(getClass());
 
     @Value("${wx.appid}")
-    private static String APPID;
+    private  String APPID;
 
     @Value("${wx.secret}")
-    private static String APPSECRET;
+    private  String APPSECRET;
 
     public String wxLogin(String code){
         /**
@@ -40,7 +42,7 @@ public class UserService {
         loginMap.put("secret",APPSECRET);
         loginMap.put("js_code",code);
         loginMap.put("grant_type","authorization_code");
-        logger.info("开始执行登录，AppId："+APPID+"Secret："+APPSECRET);
+        logger.info("开始执行登录，AppId="+APPID+",Secret="+APPSECRET+" ,Code="+code);
         String result = HttpRequest.get("https://api.weixin.qq.com/sns/jscode2session?")
                 .header(Header.USER_AGENT, "Hutool http")//头信息，多个头信息多次调用此方法即可
                 .form(loginMap)//表单内容

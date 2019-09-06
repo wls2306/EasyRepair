@@ -4,9 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @ApiModel(value = "com.tech.repair.pojo.User")
 @Data
@@ -16,8 +14,10 @@ public class User {
     /**
      * 自增id
      */
-    @Id
+
     @ApiModelProperty(value = "自增id")
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     /**
