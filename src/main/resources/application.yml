@@ -1,21 +1,12 @@
 server:
   port: 8080
+  servlet:
+    context-path: /easy_repair
+
 
 wx:
   appid: wx53d0f9e697163f5c
   secret: 3aa31e8b045729dd457abc849a86335f
-
-
-
-
-
-
-
-
-
-
-
-
 
 spring:
   datasource:

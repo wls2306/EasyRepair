@@ -2,9 +2,11 @@ package com.tech.repair.repository;
 
 import com.tech.repair.pojo.UserCompany;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserCompanyRepository extends JpaRepository<UserCompany,Integer> {
 
    List<UserCompany> findByUserOpenId(String userOpenId);
