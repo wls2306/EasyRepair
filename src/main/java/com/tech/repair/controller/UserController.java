@@ -89,6 +89,15 @@ public class UserController {
         return (User) updateUser(u);
     }
 
+    @DeleteMapping("/")
+    @ApiOperation(value = "删除用户",notes = "★★ 执行此操作后，数据库中所有与 UserOpenId 相同的数据均会被删除！★★")
+    public boolean deleteUserByOpenId(String userOpenId)
+    {
+        return userService.deleteByUserOpenId(userOpenId);
+    }
+
+
+
 
 
   /*  @PutMapping("/{openId}")

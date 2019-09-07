@@ -4,13 +4,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @ApiModel(value = "com.tech.repair.pojo.Company")
 @Data
+@Entity
 @Table(name = "company")
 public class Company {
     /**

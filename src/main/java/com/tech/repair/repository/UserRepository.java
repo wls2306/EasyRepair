@@ -11,6 +11,11 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User,Integer> {
     User findByUserOpenId(String openId);
 
+    int deleteByUserOpenId(String userOpenId);
+
+
+
+
     /**
      * update 后写类名 不是表明
      */
