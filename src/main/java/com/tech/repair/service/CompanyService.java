@@ -1,6 +1,6 @@
 package com.tech.repair.service;
 
-import com.tech.repair.pojo.Company;
+import com.tech.repair.po.Company;
 import com.tech.repair.repository.CompanyRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;

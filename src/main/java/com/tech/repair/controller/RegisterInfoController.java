@@ -1,11 +1,10 @@
 package com.tech.repair.controller;
 
-import com.tech.repair.pojo.RegisterInfo;
+import com.tech.repair.po.RegisterInfo;
 import com.tech.repair.service.RegisterInfoService;
-import com.tech.repair.vojo.RegisterInfoVo;
+import com.tech.repair.vo.RegisterInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

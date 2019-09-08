@@ -1,7 +1,6 @@
 package com.tech.repair.service;
 
-import ch.qos.logback.core.util.SystemInfo;
-import com.tech.repair.pojo.System;
+import com.tech.repair.po.System;
 import com.tech.repair.repository.SystemRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;

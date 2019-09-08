@@ -1,4 +1,4 @@
-package com.tech.repair.pojo;
+package com.tech.repair.po;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@ApiModel(value = "com.tech.repair.pojo.System")
+@ApiModel(value = "com.tech.repair.po.System")
 @Table(name = "system")
 @Entity
 @Data

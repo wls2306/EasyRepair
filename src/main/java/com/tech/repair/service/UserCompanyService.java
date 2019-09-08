@@ -1,9 +1,9 @@
 package com.tech.repair.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tech.repair.pojo.Company;
-import com.tech.repair.pojo.User;
-import com.tech.repair.pojo.UserCompany;
+import com.tech.repair.po.Company;
+import com.tech.repair.po.User;
+import com.tech.repair.po.UserCompany;
 import com.tech.repair.repository.UserCompanyRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;

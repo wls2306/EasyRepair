@@ -1,6 +1,6 @@
 package com.tech.repair.controller;
 
-import com.tech.repair.pojo.CompanyQuestion;
+import com.tech.repair.po.CompanyQuestion;
 import com.tech.repair.service.CompanyQuestionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

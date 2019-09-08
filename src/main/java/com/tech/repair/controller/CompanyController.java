@@ -1,6 +1,6 @@
 package com.tech.repair.controller;
 
-import com.tech.repair.pojo.Company;
+import com.tech.repair.po.Company;
 import com.tech.repair.service.CompanyService;
 import com.tech.repair.util.UploadPathUtil;
 import io.swagger.annotations.Api;

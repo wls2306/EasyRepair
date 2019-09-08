@@ -1,4 +1,4 @@
-package com.tech.repair.pojo;
+package com.tech.repair.po;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@ApiModel(value = "com.tech.repair.pojo.CompanyQuestion")
+@ApiModel(value = "com.tech.repair.po.CompanyQuestion")
 @Table(name = "company_question")
 @Entity
 @Data

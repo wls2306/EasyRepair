@@ -1,23 +1,29 @@
-package com.tech.repair.pojo;
+package com.tech.repair.vo;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.*;
-
-@ApiModel(value = "com.tech.repair.pojo.Company")
 @Data
-@Entity
-@Table(name = "company")
-public class Company {
+public class RegisterInfoVo {
+
+
     /**
-     * 自增id
+     * 用户OpenId
      */
-    @ApiModelProperty(value = "自增id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @ApiModelProperty(value = "用户OpenId")
+    private String userOpenId;
+
+    /**
+     * 用户姓名
+     */
+    @ApiModelProperty(value = "用户姓名")
+    private String userName;
+
+    /**
+     * 用户联系方式
+     */
+    @ApiModelProperty(value = "用户联系方式")
+    private String userPhone;
 
     /**
      * 单位编号
@@ -54,5 +60,20 @@ public class Company {
      */
     @ApiModelProperty(value = "单位状态（0.不开放 1.开放）")
     private String companyStatus;
-}
 
+    /**
+     * 回答内容（用;分隔）
+     */
+    @ApiModelProperty(value = "回答内容（用;分隔）")
+    private String registerAnswer;
+
+
+    /**
+     * 申请状态（-1.拒绝 0.待审核 1.通过）
+     */
+    @ApiModelProperty(value = "申请状态（-1.拒绝 0.待审核 1.通过）")
+    private String registerStatus;
+
+
+
+}

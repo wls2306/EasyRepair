@@ -1,13 +1,11 @@
 package com.tech.repair.controller;
 
-import com.sun.xml.internal.bind.v2.TODO;
-import com.tech.repair.pojo.Company;
-import com.tech.repair.pojo.User;
-import com.tech.repair.pojo.UserCompany;
+import com.tech.repair.po.Company;
+import com.tech.repair.po.User;
+import com.tech.repair.po.UserCompany;
 import com.tech.repair.service.UserCompanyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.tech.repair.repository;
 
-import com.tech.repair.pojo.System;
+import com.tech.repair.po.System;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,12 +1,12 @@
 package com.tech.repair.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tech.repair.pojo.Company;
-import com.tech.repair.pojo.RegisterInfo;
-import com.tech.repair.pojo.User;
-import com.tech.repair.pojo.UserCompany;
+import com.tech.repair.po.Company;
+import com.tech.repair.po.RegisterInfo;
+import com.tech.repair.po.User;
+import com.tech.repair.po.UserCompany;
 import com.tech.repair.repository.RegisterInfoRepository;
-import com.tech.repair.vojo.RegisterInfoVo;
+import com.tech.repair.vo.RegisterInfoVo;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TransferQueue;
+
 @Transactional
 @Service
 public class RegisterInfoService {

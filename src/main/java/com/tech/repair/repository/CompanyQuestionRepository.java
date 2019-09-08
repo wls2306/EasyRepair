@@ -1,10 +1,8 @@
 package com.tech.repair.repository;
 
-import com.tech.repair.pojo.CompanyQuestion;
+import com.tech.repair.po.CompanyQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface CompanyQuestionRepository extends JpaRepository<CompanyQuestion,Integer> {

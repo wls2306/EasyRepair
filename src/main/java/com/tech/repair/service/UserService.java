@@ -1,10 +1,9 @@
 package com.tech.repair.service;
 
-import cn.hutool.core.lang.Console;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tech.repair.pojo.User;
+import com.tech.repair.po.User;
 import com.tech.repair.repository.UserRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 @Transactional
 @Service

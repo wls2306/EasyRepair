@@ -1,16 +1,13 @@
 package com.tech.repair.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tech.repair.pojo.Company;
-import com.tech.repair.pojo.CompanyQuestion;
+import com.tech.repair.po.CompanyQuestion;
 import com.tech.repair.repository.CompanyQuestionRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.TransferQueue;
 
 @Service
 public class CompanyQuestionService {
