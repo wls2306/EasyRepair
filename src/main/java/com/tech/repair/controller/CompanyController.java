@@ -68,6 +68,11 @@ public class CompanyController {
                 /**
                  * 保存文件
                  */
+                File file1=new File(filepath);
+                if (!file1.exists()) {
+                    file1.mkdirs();
+                }
+
                 file.transferTo(new File(filepath));
 
                 /**
