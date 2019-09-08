@@ -77,7 +77,7 @@ public class CompanyQuestionService {
 
     public boolean deleteCompanyQuestion(String companyId)
     {
-        if (Strings.isNotEmpty(companyId)) {
+        if (Strings.isNotBlank(companyId)) {
             return companyQuestionRepository.deleteByCompanyId(companyId) > 0;
         }else
         {
