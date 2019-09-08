@@ -81,7 +81,7 @@ public class CompanyQuestionService {
     public boolean deleteCompanyQuestion(String companyId)
     {
         if (Strings.isNotEmpty(companyId)) {
-            return companyQuestionRepository.deleteByCompanyId(companyId) > 0 ? true : false;
+            return companyQuestionRepository.deleteByCompanyId(companyId) > 0;
         }else
         {
             logger.warn("delete -参数错误");

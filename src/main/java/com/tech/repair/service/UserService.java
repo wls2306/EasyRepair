@@ -93,7 +93,7 @@ public class UserService {
          * @Date:12:36 2019/9/6
          * @Description: 添加新用户
          */
-        if (Strings.isBlank(user.getUserOpenId()))
+        if (Strings.isNotBlank(user.getUserOpenId()))
         {
             ObjectMapper mapper=new ObjectMapper();
             logger.info("添加新用户："+mapper.writeValueAsString(user));
@@ -194,7 +194,7 @@ public class UserService {
     public boolean deleteByUserOpenId(String userOpenId)
     {
         if (Strings.isNotBlank(userOpenId))
-            return userRepository.deleteByUserOpenId(userOpenId) > 0 ? true : false;
+            return userRepository.deleteByUserOpenId(userOpenId) > 0;
         else
         {
             logger.warn("删除用户- 参数错误");

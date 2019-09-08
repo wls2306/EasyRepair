@@ -41,7 +41,8 @@ public class UserCompanyService {
     public UserCompany addUserCompany(UserCompany userCompany)
     {
 
-        if (Strings.isNotBlank(userCompany.getCompanyId())&&Strings.isBlank(userCompany.getUserOpenId())) {
+        if (Strings.isNotBlank(userCompany.getCompanyId())&&Strings.isNotBlank(userCompany.getUserOpenId())) {
+            ObjectMapper mapper=new ObjectMapper();
             return (UserCompany)userCompanyRepository.save(userCompany);
         }
         else
@@ -142,7 +143,7 @@ public class UserCompanyService {
     {
         if (Strings.isNotEmpty(userOpenId))
         {
-            return userCompanyRepository.deleteByUserOpenId(userOpenId)>0?true:false;
+            return userCompanyRepository.deleteByUserOpenId(userOpenId)>0;
         }else
         {
             logger.warn("参数错误");
