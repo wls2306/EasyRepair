@@ -5,12 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @ApiModel(value = "com.tech.repair.po.Order")
 @Data
+@Entity
+@Table(name = "order")
 public class Order {
     /**
      * 自增id
@@ -42,13 +42,20 @@ public class Order {
      * 发起者姓名
      */
     @ApiModelProperty(value = "发起者姓名")
-    private String oederUserName;
+    private String orderUserName;
 
     /**
      * 发起者联系方式
      */
     @ApiModelProperty(value = "发起者联系方式")
     private String orderUserPhone;
+
+    /**
+     * 维修物品名称
+     */
+    @ApiModelProperty(value = "维修物品名称")
+    private String orderGoodsName;
+
 
     /**
      * 维修物品编号

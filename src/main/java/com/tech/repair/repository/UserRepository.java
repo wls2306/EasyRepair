@@ -26,6 +26,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query("update User set userPhone=?1 where userOpenId=?2")
     int updateUserPhoneByUserOpenId(String userPhone, String userOpenId);
 
-    @Query("update User set userStatus=?1 where userOpenId=?2")
-    int updateUserStatusByUserOpenId(String userStatus,String userOpenId);
+   /* @Query("update User set ?1=?2 where userOpenId=?3")
+    int updateUser()*/
 }

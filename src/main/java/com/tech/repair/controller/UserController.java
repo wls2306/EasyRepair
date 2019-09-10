@@ -76,15 +76,17 @@ public class UserController {
 
     @PutMapping("/")
     @ApiOperation(value = "更新用户信息")
-    public User updateUser(User u)throws Exception
+    public User updateUser(User user)throws Exception
     {
         /**
          * @Author:Wls
          * @Date:13:10 2019/9/6
          * @Description: 更新用户信息
          */
+
+
         logger.info("更新用户");
-        return (User) updateUser(u);
+        return (User) userService.updateUser(user);
     }
 
     @DeleteMapping("/")

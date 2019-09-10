@@ -5,9 +5,11 @@ import cn.hutool.http.HttpRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tech.repair.po.User;
 import com.tech.repair.repository.UserRepository;
+import com.tech.repair.util.getNullPropertyNames;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -150,20 +152,20 @@ public class UserService {
     }
 
 
-    public boolean updateUserStatusByUserOpenId(String userStatus,String userOpenId)
+  /*  public boolean updateUserStatusByUserOpenId(String userStatus,String userOpenId)
     {
-        /**
+        *//**
          * @Author:Wls
          * @Date:12:32 2019/9/6
          * @Description: 修改用户状态
-         */
+         *//*
         if (Strings.isNotBlank(userStatus)&&Strings.isNotBlank(userOpenId))
             return userRepository.updateUserStatusByUserOpenId(userStatus,userOpenId)>0?true:false;
         else {
             logger.error("修改用户状态-参数错误");
             return false;
         }
-    }
+    }*/
 
     public User updateUser(User u)throws Exception
     {
@@ -173,7 +175,19 @@ public class UserService {
          * @Description: 更新用户
          */
         logger.info("更新用户信息");
-        if (u!=null)
+
+        if (Strings.isNotBlank(u.getUserOpenId())) {
+            User oldUser=(User)getUser(u.getUserOpenId());
+            BeanUtils.copyProperties(u,oldUser, getNullPropertyNames.getNullPropertyNames(u));
+            ObjectMapper mapper=new ObjectMapper();
+            System.out.println(mapper.writeValueAsString(oldUser));
+            return userRepository.save(oldUser);
+        }else {
+            logger.error("更新用户信息-参数错误");
+            return null;
+        }
+
+        /*if (u!=null)
         {
             ObjectMapper mapper=new ObjectMapper();
             logger.info("更新用户信息："+mapper.writeValueAsString(u));
@@ -181,7 +195,7 @@ public class UserService {
         }else {
             logger.error("更新用户信息-参数错误");
             return null;
-        }
+        }*/
     }
 
     /**
