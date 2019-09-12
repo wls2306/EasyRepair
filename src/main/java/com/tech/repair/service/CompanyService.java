@@ -2,9 +2,11 @@ package com.tech.repair.service;
 
 import com.tech.repair.po.Company;
 import com.tech.repair.repository.CompanyRepository;
+import com.tech.repair.util.getNullPropertyNames;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,9 +71,14 @@ public class CompanyService {
     public Company updateCompany(Company c)
     {
         logger.info("执行更新Company");
-        if (c.getId()!=0)
-            return companyRepository.save(c);
+        if (Strings.isNotBlank(c.getCompanyId())) {
+            Company target=(Company) getCompany(c.getCompanyId());
+            BeanUtils.copyProperties(c,target, getNullPropertyNames.getNullPropertyNames(c));
+            return companyRepository.save(target);
+        }
+
         else {
+            logger.warn("company 为空");
             return null;
         }
     }

@@ -16,6 +16,6 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
 
     List<Order> findByOrderUserOpenId(String openId);
 
-
+    Order findByOrderUserOpenIdAndOrderCompanyId(String userOpenId,String companyId);
 
 }
