@@ -4,6 +4,7 @@ import com.tech.repair.po.Company;
 import com.tech.repair.po.Order;
 import com.tech.repair.po.User;
 import com.tech.repair.repository.OrderRepository;
+import com.tech.repair.util.getNullPropertyNames;
 import com.tech.repair.vo.OrderVo;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
@@ -26,6 +27,11 @@ public class OrderService {
 
     private final Logger logger= LoggerFactory.getLogger(getClass());
 
+    /**
+     * @Author:Wls
+     * @Date:8:29 2019/9/11
+     * @Description:
+     */
     public Order addOrder(Order o)
     {
         if (o!=null)
@@ -38,7 +44,11 @@ public class OrderService {
         }
     }
 
-
+    /**
+     * @Author:Wls
+     * @Date:8:29 2019/9/11
+     * @Description:
+     */
     public List<OrderVo> getOrderByCompanyId(String companyId)
     {
         if (Strings.isNotBlank(companyId)) {
@@ -52,6 +62,12 @@ public class OrderService {
         }
     }
 
+
+    /**
+     * @Author:Wls
+     * @Date:8:29 2019/9/11
+     * @Description:
+     */
     public List<OrderVo> getOrderByUserOpenId(String userOpenId)
     {
         if (Strings.isNotBlank(userOpenId)) {
@@ -63,20 +79,61 @@ public class OrderService {
             return null;
         }
     }
+    /**
+     * @Author:Wls
+     * @Date:8:29 2019/9/11
+     * @Description:
+     */
+    public OrderVo getOrderByOpenIdAndCompanyId(String companyId,String userOpenId)
+    {
+        Order o=orderRepository.findByOrderUserOpenIdAndOrderCompanyId(userOpenId,companyId);
+        return doMix(o);
+    }
 
+
+    /**
+     * @Author:Wls
+     * @Date:8:29 2019/9/11
+     * @Description:
+     */
     public Order updateOrder(Order o)
     {
         if (Strings.isNotBlank(o.getOrderId()))
         {
-            return orderRepository.save(o);
+            Order target=orderRepository.findByOrderId(o.getOrderId());
+            BeanUtils.copyProperties(o,target, getNullPropertyNames.getNullPropertyNames(o));
+            return orderRepository.save(target);
         }else
         {
-            logger.warn("更新order,参数为空");
+            logger.warn("更新order,orderId参数为空");
             return null;
         }
     }
 
+    /**
+     * @Author:Wls
+     * @Date:8:28 2019/9/11
+     * @Description:
+     */
+    public OrderVo getOrderByOrderId(String orderId)
+    {
+        if (Strings.isNotBlank(orderId)) {
+            return doMix(orderRepository.findByOrderId(orderId));
+        }else
+        {
+            logger.warn("查询失败,orderId参数为空");
+            return null;
+        }
 
+
+    }
+
+
+    /**
+     * @Author:Wls
+     * @Date:8:29 2019/9/11
+     * @Description:
+     */
     private List<OrderVo> doMix(List<Order> orderList)
     {
         List<OrderVo> result=new ArrayList<>();
@@ -96,8 +153,27 @@ public class OrderService {
            logger.warn("组装错误，orderList为空！");
            return null;
        }
+
     }
 
+    /**
+     * @Author:Wls
+     * @Date:8:29 2019/9/11
+     * @Description:
+     */
+    private OrderVo doMix(Order order) {
 
-
+        if (Strings.isNotBlank(order.getOrderId())) {
+            OrderVo result = new OrderVo();
+            User u = (User) userService.getUser(order.getOrderUserOpenId());
+            Company c = (Company) companyService.getCompany(order.getOrderCompanyId());
+            BeanUtils.copyProperties(u, result);
+            BeanUtils.copyProperties(c, result);
+            BeanUtils.copyProperties(order, result);
+            return result;
+        } else {
+            logger.warn("组装错误，orderId为空！");
+            return null;
+        }
+    }
 }

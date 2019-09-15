@@ -56,7 +56,7 @@ public class OrderController {
     /**
      * @Author:Wls
      * @Date:16:28 2019/9/10
-     * @Description:
+     * @Description: 根据公司编号获取工单
      */
     @ApiOperation(value = "根据公司编号获取工单")
     @GetMapping("/company")
@@ -64,11 +64,10 @@ public class OrderController {
     {
         return orderService.getOrderByCompanyId(companyId);
     }
-
     /**
      * @Author:Wls
      * @Date:16:28 2019/9/10
-     * @Description:
+     * @Description: 根据用户OpenId获取工单
      */
     @ApiOperation(value = "根据用户OpenId获取工单")
     @GetMapping("/user")
@@ -80,15 +79,37 @@ public class OrderController {
     /**
      * @Author:Wls
      * @Date:16:35 2019/9/10
-     * @Description:
+     * @Description:更新工单信息
      */
-    @ApiOperation(value = "更新工单信息")
+    @ApiOperation(value = "更新工单信息",notes = "请保证工单号 orderId 非空！！")
     @PutMapping("/")
     public Order updateOrder(Order o)
     {
         return orderService.updateOrder(o);
     }
 
+    /**
+     * @Author:Wls
+     * @Date:8:15 2019/9/11
+     * @Description: 通过openId和companyId 查询唯一的工单
+     */
+    @ApiOperation(value = "通过openId和companyId 查询唯一的工单")
+    @GetMapping("/oc")
+    public OrderVo getOrderByUserOpenIdAndCompanyId(String userOpenId,String companyId)
+    {
+        return orderService.getOrderByOpenIdAndCompanyId(companyId, userOpenId);
+    }
 
+    /**
+     * @Author:Wls
+     * @Date:8:19 2019/9/11
+     * @Description: 通过orderId查询工单
+     */
+    @ApiOperation(value = "通过orderId查询工单")
+    @GetMapping("/")
+    public OrderVo getOrderByOrderId(String orderId)
+    {
+        return orderService.getOrderByOrderId(orderId);
+    }
 
 }

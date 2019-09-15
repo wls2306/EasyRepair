@@ -3,9 +3,11 @@ package com.tech.repair.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tech.repair.po.CompanyQuestion;
 import com.tech.repair.repository.CompanyQuestionRepository;
+import com.tech.repair.util.getNullPropertyNames;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +44,12 @@ public class CompanyQuestionService {
     */
     public CompanyQuestion updateCompanyQuestion(CompanyQuestion cq)throws Exception
     {
+        CompanyQuestion target=companyQuestionRepository.findByCompanyId(cq.getCompanyId());
         if (Strings.isNotBlank(cq.getCompanyId())) {
             ObjectMapper mapper=new ObjectMapper();
             logger.info("update -{{}}",mapper.writeValueAsString(cq));
-            return (CompanyQuestion) companyQuestionRepository.save(cq);
+            BeanUtils.copyProperties(cq,target, getNullPropertyNames.getNullPropertyNames(cq));
+            return (CompanyQuestion) companyQuestionRepository.save(target);
         }else {
             logger.warn("update -参数错误");
             return null;
