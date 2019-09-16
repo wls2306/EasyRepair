@@ -1,9 +1,24 @@
 
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+
+
+
 wx:
   appid: wx53d0f9e697163f5c
   secret: 3aa31e8b045729dd457abc849a86335f
 
 spring:
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+
   datasource:
     url: jdbc:mysql://localhost:3306/easy_repair
     username: root
@@ -61,5 +76,4 @@ spring:
       properties:
         hibernate:
           format_sql: true
-
 

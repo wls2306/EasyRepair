@@ -1,5 +1,6 @@
 package com.tech.repair.service;
 
+import cn.hutool.core.util.RandomUtil;
 import com.tech.repair.po.Company;
 import com.tech.repair.repository.CompanyRepository;
 import com.tech.repair.util.getNullPropertyNames;
@@ -11,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 @Transactional
 @Service
 public class CompanyService {
@@ -25,6 +30,15 @@ public class CompanyService {
     public Company saveCompany(Company c)
     {
         c.setId(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+
+        String companyId=sdf.format(new Date())+ RandomUtil.randomInt(1000,9999);
+
+        c.setCompanyId(companyId);
+
+        logger.info("随机分配的单位编号："+companyId);
+
+
         if (c!=null)
         {
             return companyRepository.save(c);
