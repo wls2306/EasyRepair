@@ -5,8 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @ApiModel(value = "com.tech.repair.po.Progress")
 @Entity
@@ -16,6 +15,8 @@ public class Progress {
     /**
      * 自增id
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "自增id")
     private Integer id;
 
