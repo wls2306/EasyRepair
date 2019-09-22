@@ -45,7 +45,7 @@ public class CompanyController {
      * 同时若信息中包含图片，则处理上传图片
      */
     @PostMapping("/")
-    @ApiOperation(value = "新建单位记录",notes = " 前端form属性需要为： enctype=\"multipart/form-data\" ")
+    @ApiOperation(value = "新建单位记录",notes = " 前端form属性需要为： enctype=\"multipart/form-data\" 单位编号不要填，自动生成，填了也没用！")
     public Company createCompany(HttpServletRequest req,Company c, MultipartFile[] files)throws Exception
     {
         if (files!=null)

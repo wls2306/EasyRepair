@@ -41,6 +41,7 @@ public class RegisterInfoService {
     */
     public RegisterInfo addRegisterInfo(RegisterInfo ri)throws Exception
     {
+        ri.setRegisterStatus("0");
         if (Strings.isNotBlank(ri.getCompanyId())&&Strings.isNotBlank(ri.getOpenId())) {
             ObjectMapper mapper=new ObjectMapper();
             logger.info("add RI --{{}}",mapper.writeValueAsString(ri));
