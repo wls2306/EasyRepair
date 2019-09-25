@@ -86,6 +86,23 @@ public class UserService {
 
     }
 
+    /**
+     * @Author:Wls
+     * @Date:8:44 2019/9/25
+     * @Description: 根据邮箱、密码获取用户
+     */
+    public User getUserByEmail(String userEmail)
+    {
+        if (Strings.isNotBlank(userEmail)) {
+            return userRepository.findByUserEmail(userEmail);
+        }else {
+            logger.error("获取用户-输入的Email为空!");
+            return null;
+        }
+    }
+
+
+
     public Object addUser(User user)throws Exception
     {
         /**
@@ -211,6 +228,18 @@ public class UserService {
         {
             logger.warn("删除用户- 参数错误");
             return false;
+        }
+    }
+
+
+    public User findUserByEmailAndPwd(String userEmail,String pwd)
+    {
+        if (Strings.isNotBlank(userEmail)&&Strings.isNotBlank(pwd)) {
+            return userRepository.findByUserEmailAndUserPwd(userEmail, pwd);
+        } else
+        {
+            logger.warn("用户邮箱登录-参数为空");
+            return null;
         }
     }
 

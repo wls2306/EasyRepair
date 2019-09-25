@@ -119,6 +119,20 @@ public class RegisterInfoService {
         }
     }
 
+    public RegisterInfo findByCompanyIdAndUserOpenId(String companyId,String openId)
+    {
+        if (Strings.isNotEmpty(companyId)&&Strings.isNotEmpty(openId))
+        {
+           return registerInfoRepository.findByCompanyIdAndOpenId(companyId, openId);
+        }else
+        {
+            logger.warn("通过 单位编号和openId查找失败，参数为空");
+            return null;
+        }
+    }
+
+
+
 
     /**
     * @Author: Wls

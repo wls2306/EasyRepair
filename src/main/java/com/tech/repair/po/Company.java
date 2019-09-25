@@ -7,9 +7,9 @@ import lombok.Data;
 import javax.persistence.*;
 
 @ApiModel(value = "com.tech.repair.po.Company")
-@Data
 @Entity
 @Table(name = "company")
+@Data
 public class Company {
     /**
      * 自增id
@@ -48,6 +48,12 @@ public class Company {
      */
     @ApiModelProperty(value = "单位图片url")
     private String companyImage;
+
+    /**
+     * 单位负责人（创建人）邮箱
+     */
+    @ApiModelProperty(value = "单位负责人（创建人）邮箱，唯一")
+    private String companyHost;
 
     /**
      * 单位状态（0.不开放 1.开放）

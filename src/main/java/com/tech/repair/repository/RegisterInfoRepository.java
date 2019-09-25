@@ -21,4 +21,6 @@ public interface RegisterInfoRepository extends JpaRepository<RegisterInfo,Integ
     List<RegisterInfo> findByCompanyId(String companyId);
 
     List<RegisterInfo> findByOpenId(String userOpenId);
+
+    RegisterInfo findByCompanyIdAndOpenId(String companyId,String openId);
 }

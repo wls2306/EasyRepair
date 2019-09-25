@@ -1,9 +1,12 @@
 package com.tech.repair.service;
 
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.tech.repair.po.Company;
-import com.tech.repair.po.Order;
+import com.tech.repair.po.RepairOrder;
 import com.tech.repair.po.User;
-import com.tech.repair.repository.OrderRepository;
+import com.tech.repair.repository.RepairOrderRepository;
 import com.tech.repair.util.getNullPropertyNames;
 import com.tech.repair.vo.OrderVo;
 import org.apache.logging.log4j.util.Strings;
@@ -19,9 +22,9 @@ import java.util.List;
 
 @Service
 @Transactional
-public class OrderService {
+public class RepairOrderService {
     @Autowired
-    private OrderRepository orderRepository;
+    private RepairOrderRepository repairOrderRepository;
     @Autowired
     private UserService userService;
     @Autowired
@@ -34,11 +37,16 @@ public class OrderService {
      * @Date:8:29 2019/9/11
      * @Description:
      */
-    public Order addOrder(Order o)
+    public RepairOrder addOrder(RepairOrder o)
     {
-        if (o!=null)
+        if (Strings.isNotBlank(o.getOrderUserOpenId()))
         {
-            return orderRepository.save(o);
+            logger.info("保存工单中...");
+            o.setOrderId("R"+o.getOrderCompanyId()+ RandomUtil.randomInt(10000,99999));
+            o.setOrderStatus("0");
+            JSONObject  jsonObject=  JSONUtil.parseObj(o);
+            logger.info(jsonObject.toString());
+            return repairOrderRepository.save(o);
         }else
         {
             logger.warn("保存工单错误，对象为空");
@@ -55,8 +63,8 @@ public class OrderService {
     {
         if (Strings.isNotBlank(companyId)) {
             List<OrderVo> result=new ArrayList<>();
-            List<Order> orderList=orderRepository.findByOrderCompanyId(companyId);
-            return doMix(orderList);
+            List<RepairOrder> repairOrderList = repairOrderRepository.findByOrderCompanyId(companyId);
+            return doMix(repairOrderList);
         }else
         {
             logger.warn("根据公司编号查询错误，参数错误！");
@@ -74,8 +82,8 @@ public class OrderService {
     {
         if (Strings.isNotBlank(userOpenId)) {
             List<OrderVo> result=new ArrayList<>();
-            List<Order> orderList=orderRepository.findByOrderUserOpenId(userOpenId);
-            return doMix(orderList);
+            List<RepairOrder> repairOrderList = repairOrderRepository.findByOrderUserOpenId(userOpenId);
+            return doMix(repairOrderList);
         }else {
             logger.warn("根据OpenId查询错误，参数错误！");
             return null;
@@ -88,7 +96,7 @@ public class OrderService {
      */
     public OrderVo getOrderByOpenIdAndCompanyId(String companyId,String userOpenId)
     {
-        Order o=orderRepository.findByOrderUserOpenIdAndOrderCompanyId(userOpenId,companyId);
+        RepairOrder o= repairOrderRepository.findByOrderUserOpenIdAndOrderCompanyId(userOpenId,companyId);
         return doMix(o);
     }
 
@@ -98,13 +106,13 @@ public class OrderService {
      * @Date:8:29 2019/9/11
      * @Description:
      */
-    public Order updateOrder(Order o)
+    public RepairOrder updateOrder(RepairOrder o)
     {
         if (Strings.isNotBlank(o.getOrderId()))
         {
-            Order target=orderRepository.findByOrderId(o.getOrderId());
+            RepairOrder target= repairOrderRepository.findByOrderId(o.getOrderId());
             BeanUtils.copyProperties(o,target, getNullPropertyNames.getNullPropertyNames(o));
-            return orderRepository.save(target);
+            return repairOrderRepository.save(target);
         }else
         {
             logger.warn("更新order,orderId参数为空");
@@ -120,7 +128,7 @@ public class OrderService {
     public OrderVo getOrderByOrderId(String orderId)
     {
         if (Strings.isNotBlank(orderId)) {
-            return doMix(orderRepository.findByOrderId(orderId));
+            return doMix(repairOrderRepository.findByOrderId(orderId));
         }else
         {
             logger.warn("查询失败,orderId参数为空");
@@ -136,17 +144,17 @@ public class OrderService {
      * @Date:8:29 2019/9/11
      * @Description:
      */
-    private List<OrderVo> doMix(List<Order> orderList)
+    private List<OrderVo> doMix(List<RepairOrder> repairOrderList)
     {
         List<OrderVo> result=new ArrayList<>();
-       if (orderList!=null) {
-           for (Order order : orderList) {
-               User u = (User) userService.getUser(order.getOrderUserOpenId());
-               Company c = (Company) companyService.getCompany(order.getOrderCompanyId());
+       if (repairOrderList !=null) {
+           for (RepairOrder repairOrder : repairOrderList) {
+               User u = (User) userService.getUser(repairOrder.getOrderUserOpenId());
+               Company c = (Company) companyService.getCompany(repairOrder.getOrderCompanyId());
                OrderVo orderVo = new OrderVo();
                BeanUtils.copyProperties(u, orderVo);
                BeanUtils.copyProperties(c, orderVo);
-               BeanUtils.copyProperties(order, orderVo);
+               BeanUtils.copyProperties(repairOrder, orderVo);
                result.add(orderVo);
            }
            return result;
@@ -163,15 +171,15 @@ public class OrderService {
      * @Date:8:29 2019/9/11
      * @Description:
      */
-    private OrderVo doMix(Order order) {
+    private OrderVo doMix(RepairOrder repairOrder) {
 
-        if (Strings.isNotBlank(order.getOrderId())) {
+        if (Strings.isNotBlank(repairOrder.getOrderId())) {
             OrderVo result = new OrderVo();
-            User u = (User) userService.getUser(order.getOrderUserOpenId());
-            Company c = (Company) companyService.getCompany(order.getOrderCompanyId());
+            User u = (User) userService.getUser(repairOrder.getOrderUserOpenId());
+            Company c = (Company) companyService.getCompany(repairOrder.getOrderCompanyId());
             BeanUtils.copyProperties(u, result);
             BeanUtils.copyProperties(c, result);
-            BeanUtils.copyProperties(order, result);
+            BeanUtils.copyProperties(repairOrder, result);
             return result;
         } else {
             logger.warn("组装错误，orderId为空！");

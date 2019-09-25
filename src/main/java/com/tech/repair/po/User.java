@@ -14,17 +14,28 @@ public class User {
     /**
      * 自增id
      */
-
     @ApiModelProperty(value = "自增id")
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 用户OpenId
+     * 用户OpenId 要求user_open_idl唯一
      */
-    @ApiModelProperty(value = "用户OpenId")
+    @ApiModelProperty(value = "用户OpenId 要求user_open_idl唯一")
     private String userOpenId;
+
+    /**
+     * 用户Email 要求user_email唯一
+     */
+    @ApiModelProperty(value = "用户Email 要求user_email唯一")
+    private String userEmail;
+
+    /**
+     * 用户密码
+     */
+    @ApiModelProperty(value = "用户密码")
+    private String userPwd;
 
     /**
      * 用户姓名
@@ -43,6 +54,12 @@ public class User {
      */
     @ApiModelProperty(value = "用户当前选择单位")
     private String userCompanyId;
+
+    /**
+     * 所属单位id
+     */
+    @ApiModelProperty(value = "所属单位id")
+    private String userBelong;
 
     /**
      * 用户角色（1.用户 2.维修员 3.管理员）

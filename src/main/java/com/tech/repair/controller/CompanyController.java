@@ -117,6 +117,21 @@ public class CompanyController {
     {
         return (Company) companyService.getCompany(companyId);
     }
+
+
+    /**
+     * @Author:Wls
+     * @Date:8:55 2019/9/25
+     * @Description: 根据单位负责人获取单位
+     */
+    @GetMapping("/host")
+    @ApiOperation(value = "根据单位负责人获取单位")
+    public Company getCompanyByCompanyHost(String companyHost)
+    {
+        return companyService.getCompanyByCompanyHost(companyHost);
+    }
+
+
     /**
      * @Author:Wls
      * @Date:15:22 2019/9/6

@@ -10,14 +10,26 @@ wx:
   appid: wx53d0f9e697163f5c
   secret: 3aa31e8b045729dd457abc849a86335f
 
+logging:
+  level:
+    org.springframework.security:
+      - debug
+      - info
+    org.springframework.web: error
+    org.hibernate.SQL: debug
+    org.hibernate.engine.QueryParameters: debug
+    org.hibernate.engine.query.HQLQueryPlan: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+
 spring:
+
 
   http:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
-
 
   datasource:
     url: jdbc:mysql://localhost:3306/easy_repair
@@ -64,16 +76,4 @@ spring:
           # 忽略过滤格式
           exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
 
-
-
-
-  jpa:
-    database: mysql
-    hibernate:
-      ddl-auto: update
-      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-      show-sql: true
-      properties:
-        hibernate:
-          format_sql: true
 

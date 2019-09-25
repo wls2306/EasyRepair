@@ -1,7 +1,8 @@
 package com.tech.repair.controller;
 
-import com.tech.repair.po.Order;
-import com.tech.repair.service.OrderService;
+import cn.hutool.core.date.DateUtil;
+import com.tech.repair.po.RepairOrder;
+import com.tech.repair.service.RepairOrderService;
 import com.tech.repair.util.UploadPathUtil;
 import com.tech.repair.vo.OrderVo;
 import io.swagger.annotations.Api;
@@ -16,10 +17,10 @@ import java.util.List;
 @RestController
 @Api(tags = "工单模块")
 @RequestMapping("/api/order/")
-public class OrderController {
+public class RepairOrderController {
 
     @Autowired
-    private OrderService orderService;
+    private RepairOrderService repairOrderService;
 
     /**
      * @Author:Wls
@@ -28,14 +29,15 @@ public class OrderController {
      */
     @ApiOperation(value = "添加新工单")
     @PostMapping("/")
-    public Order addOrder(Order order, MultipartFile[] files, HttpServletRequest req)throws Exception
+    public RepairOrder addOrder(RepairOrder repairOrder, MultipartFile[] files, HttpServletRequest req)throws Exception
     {
+        System.out.println("添加新工单");
         String imageUrl="";
         if (files !=null)
         {
             for (MultipartFile file : files) {
                 int i=0;
-                    String filepath=req.getSession().getServletContext().getRealPath("/")+"image\\order\\"+i+".jpg";
+                    String filepath=req.getSession().getServletContext().getRealPath("/")+"image\\repairOrder\\"+i+".jpg";
 
                     filepath= UploadPathUtil.getAbsolutePath(filepath);
 
@@ -44,13 +46,13 @@ public class OrderController {
                         rs.mkdirs();
                     }
                     file.transferTo(rs);
-                    imageUrl+="image/order/"+i+".jpg;";
+                    imageUrl+="image/repairOrder/"+i+".jpg;";
                 i++;
             }
-            order.setOrderImage(imageUrl);
-            return orderService.addOrder(order);
         }
-        return null;
+        repairOrder.setOrderImage(imageUrl);
+        repairOrder.setOrderCreateTime(DateUtil.now());
+        return repairOrderService.addOrder(repairOrder);
     }
 
     /**
@@ -62,7 +64,7 @@ public class OrderController {
     @GetMapping("/company")
     public List<OrderVo> getOrderByCompanyId(String companyId)
     {
-        return orderService.getOrderByCompanyId(companyId);
+        return repairOrderService.getOrderByCompanyId(companyId);
     }
     /**
      * @Author:Wls
@@ -73,7 +75,7 @@ public class OrderController {
     @GetMapping("/user")
     public List<OrderVo> getOrderByUserOpenId(String userOpenId)
     {
-        return orderService.getOrderByUserOpenId(userOpenId);
+        return repairOrderService.getOrderByUserOpenId(userOpenId);
     }
 
     /**
@@ -83,9 +85,9 @@ public class OrderController {
      */
     @ApiOperation(value = "更新工单信息",notes = "请保证工单号 orderId 非空！！")
     @PutMapping("/")
-    public Order updateOrder(Order o)
+    public RepairOrder updateOrder(RepairOrder o)
     {
-        return orderService.updateOrder(o);
+        return repairOrderService.updateOrder(o);
     }
 
     /**
@@ -97,7 +99,7 @@ public class OrderController {
     @GetMapping("/oc")
     public OrderVo getOrderByUserOpenIdAndCompanyId(String userOpenId,String companyId)
     {
-        return orderService.getOrderByOpenIdAndCompanyId(companyId, userOpenId);
+        return repairOrderService.getOrderByOpenIdAndCompanyId(companyId, userOpenId);
     }
 
     /**
@@ -109,7 +111,7 @@ public class OrderController {
     @GetMapping("/")
     public OrderVo getOrderByOrderId(String orderId)
     {
-        return orderService.getOrderByOrderId(orderId);
+        return repairOrderService.getOrderByOrderId(orderId);
     }
 
 }

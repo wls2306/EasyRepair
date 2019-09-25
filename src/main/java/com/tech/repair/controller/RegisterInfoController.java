@@ -79,5 +79,17 @@ public class RegisterInfoController {
         return registerInfoService.findByUserOpenId(userOpenId);
     }
     
+    /**
+     * @Author:Wls
+     * @Date:21:28 2019/9/16
+     * @Description: 
+     */
+    @GetMapping("/uc")
+    @ApiOperation(value = "根据单位编号和个人OpenId查找唯一申请")
+    public RegisterInfo findByOpenIdAndCompanyId(String companyId,String userOpenId)
+    {
+        return registerInfoService.findByCompanyIdAndUserOpenId(companyId, userOpenId);
+    }
+    
 
 }

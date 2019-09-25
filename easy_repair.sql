@@ -90,10 +90,10 @@ CREATE TABLE `notice`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for order
+-- Table structure for repairOrder
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order`  (
+DROP TABLE IF EXISTS `repairOrder`;
+CREATE TABLE `repairOrder`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `order_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '工单编号',
   `order_company_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '工单所属单位编号',
@@ -128,7 +128,7 @@ CREATE TABLE `progress`  (
   `progress_time` datetime(0) NULL DEFAULT NULL COMMENT '提交时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `orderid`(`progress_order_id`) USING BTREE,
-  CONSTRAINT `orderid` FOREIGN KEY (`progress_order_id`) REFERENCES `order` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `orderid` FOREIGN KEY (`progress_order_id`) REFERENCES `repairOrder` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
