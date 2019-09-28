@@ -31,10 +31,8 @@ public class RepairCompanyService {
     public RepairCompany addRepairCompany(RepairCompany rc)
     {
         if (Strings.isNotBlank(rc.getRcHost())) {
-            SimpleDateFormat sdf=new SimpleDateFormat();
-            String rcId=sdf.format(new Date())+ RandomUtil.randomInt(1000,9999);
-            rc.setRcId(rcId);
-            logger.info("随机分配的维修单位编号："+rcId);
+
+            logger.info("随机分配的维修单位编号："+rc.getRcId());
             return repairCompanyRepository.save(rc);
         }else
         {
@@ -59,6 +57,25 @@ public class RepairCompanyService {
             return null;
         }
     }
+
+    /**
+     * @Author:Wls
+     * @Date:10:13 2019/9/26
+     * @Description: 根据维修单位编号获取维修单位
+     */
+    public RepairCompany getRepairCompanyByRcId(String rcId)
+    {
+        if (Strings.isNotBlank(rcId)) {
+            return repairCompanyRepository.findByRcId(rcId);
+        }else
+        {
+            logger.warn("根据维修单位编号获取维修单位-参数错误");
+            return null;
+        }
+    }
+
+
+
 
 
 

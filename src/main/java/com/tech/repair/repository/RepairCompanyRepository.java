@@ -9,6 +9,8 @@ public interface RepairCompanyRepository extends JpaRepository<RepairCompany,Int
 
     RepairCompany findByRcHost(String rcHost);
 
+    RepairCompany findByRcId(String rcId);
+
     int deleteByRcId(String rcId);
 
 

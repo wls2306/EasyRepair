@@ -16,10 +16,16 @@ public interface RcApplyRepository  extends JpaRepository<RcApply,Integer> {
     @Query("update RcApply set status=-1 where id=?1")
     int rejectApply(Integer id);
 
+    RcApply findById(String id);
+
+    RcApply findByRcIdAndCompanyId(String rcId,String companyId);
+
     List<RcApply> findByRcId(String rcId);
 
     List<RcApply> findByCompanyId(String companyId);
 
     int deleteById(String id);
+
+
 
 }

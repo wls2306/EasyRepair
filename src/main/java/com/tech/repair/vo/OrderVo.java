@@ -7,6 +7,12 @@ import java.util.Date;
 
 @Data
 public class OrderVo {
+
+    /**
+     * 申请编号
+     */
+    private Integer id;
+
     /**
      * 用户OpenId
      */

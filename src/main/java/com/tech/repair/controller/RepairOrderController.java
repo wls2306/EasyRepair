@@ -1,13 +1,17 @@
 package com.tech.repair.controller;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.tech.repair.po.RepairOrder;
 import com.tech.repair.service.RepairOrderService;
+import com.tech.repair.util.DirectoryUtil;
 import com.tech.repair.util.UploadPathUtil;
 import com.tech.repair.vo.OrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +20,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = "工单模块")
-@RequestMapping("/api/order/")
+@RequestMapping("/api/repair_order/")
 public class RepairOrderController {
 
     @Autowired
@@ -29,24 +33,42 @@ public class RepairOrderController {
      */
     @ApiOperation(value = "添加新工单")
     @PostMapping("/")
-    public RepairOrder addOrder(RepairOrder repairOrder, MultipartFile[] files, HttpServletRequest req)throws Exception
+    public RepairOrder addOrder(RepairOrder repairOrder, MultipartFile[] files)throws Exception
     {
         System.out.println("添加新工单");
         String imageUrl="";
+
+        String repairOrderId="R"+repairOrder.getOrderCompanyId()+System.currentTimeMillis();
+
+        repairOrder.setOrderId(repairOrderId);
+
         if (files !=null)
         {
             for (MultipartFile file : files) {
+
                 int i=0;
-                    String filepath=req.getSession().getServletContext().getRealPath("/")+"image\\repairOrder\\"+i+".jpg";
 
-                    filepath= UploadPathUtil.getAbsolutePath(filepath);
+                String staticPath= ClassUtils.getDefaultClassLoader().getResource("").getPath();
 
-                    File rs=new File(filepath);
-                    if (rs.exists()) {
+                String path= staticPath+"static\\images\\repair_order\\";
+
+                System.out.println(repairOrderId);
+
+                path+=repairOrderId;
+
+                DirectoryUtil du=new DirectoryUtil();
+
+                du.createParentDir(path);
+
+                String filepath= UploadPathUtil.getAbsolutePath(path);
+
+                File rs=new File(filepath,i+".jpg");
+                    /*if (!rs.exists()) {
                         rs.mkdirs();
-                    }
+                    }*/
+
                     file.transferTo(rs);
-                    imageUrl+="image/repairOrder/"+i+".jpg;";
+                    imageUrl+="images/repair_order/"+repairOrderId+"/"+i+".jpg;";
                 i++;
             }
         }

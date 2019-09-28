@@ -2,6 +2,7 @@ package com.tech.repair.controller;
 
 import com.tech.repair.po.RcApply;
 import com.tech.repair.service.RcApplyService;
+import com.tech.repair.vo.RcVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,24 @@ public class RcApplyController {
     }
 
 
+    @GetMapping("/")
+    @ApiOperation(value = "根据单位编号和维修单位编号获取申请")
+    public RcVo getApplyByCompanyIdAndRcId(String companyId,String rcId)
+    {
+        return rcApplyService.getRcApplyByRcIdAndCompanyId(rcId, companyId);
+    }
+
+
     @GetMapping("/company")
     @ApiOperation(value = "根据单位查询关系申请")
-    public List<RcApply> getRcApplyByCompanyId(String companyId)
+    public List<RcVo> getRcApplyByCompanyId(String companyId)
     {
         return rcApplyService.getRcApplyByCompanyId(companyId);
     }
 
     @GetMapping("/rc")
     @ApiOperation(value = "根据维修单位查询关系申请")
-    public List<RcApply> getRcApplyByRcid(String rcid)
+    public List<RcVo> getRcApplyByRcid(String rcid)
     {
         return rcApplyService.getRcApplyByRcId(rcid);
     }

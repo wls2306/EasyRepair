@@ -29,14 +29,10 @@ public class CompanyService {
 
     public Company saveCompany(Company c)
     {
-        c.setId(0);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
 
-        String companyId=sdf.format(new Date())+ RandomUtil.randomInt(1000,9999);
 
-        c.setCompanyId(companyId);
 
-        logger.info("随机分配的单位编号："+companyId);
+        logger.info("随机分配的单位编号："+c.getCompanyId());
 
 
         if (c!=null)

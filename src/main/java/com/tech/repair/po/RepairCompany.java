@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @ApiModel(value = "com.tech.repair.po.RepairCompany")
 @Entity
-@Table(name = "repair_company")
+@Table(name = "repair_table")
 @Data
 public class RepairCompany {
     /**
@@ -36,5 +36,11 @@ public class RepairCompany {
      */
     @ApiModelProperty(value = "维修单位负责人邮箱")
     private String rcHost;
+
+    /**
+     * 维修单位图片
+     */
+    @ApiModelProperty(value = "维修单位图片")
+    private String rcImage;
 }
 

@@ -1,12 +1,20 @@
 package com.tech.repair.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import com.tech.repair.po.RepairCompany;
 import com.tech.repair.service.RepairCompanyService;
+import com.tech.repair.util.UploadPathUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 @Api(tags = "维修单位模块")
@@ -22,8 +30,31 @@ public class RepairCompanyController  {
      */
     @PostMapping("/")
     @ApiOperation(value = "新增维修单位")
-    public RepairCompany addRepairCompany(RepairCompany rc)
+    public RepairCompany addRepairCompany(RepairCompany rc, MultipartFile[] files)throws Exception
     {
+        SimpleDateFormat sdf=new SimpleDateFormat();
+        String rcId=sdf.format(new Date())+ RandomUtil.randomInt(1000,9999);
+        rc.setRcId(rcId);
+
+        String imgUrls="";
+        if (files!=null) {
+            String path= ClassUtils.getDefaultClassLoader().getResource("").getPath();
+            path+="static\\images\\repair_company\\";
+            int i=0;
+            for (MultipartFile file : files) {
+                String filePath= UploadPathUtil.getAbsolutePath(path);
+                File rs=new File(path,i+".jpg");
+                if (!rs.exists())
+                {
+                    rs.mkdirs();
+                }
+                file.transferTo(rs);
+                imgUrls+="/images/repair_company/"+i+".jpg;";
+                i++;
+            }
+            rc.setRcImage(imgUrls);
+        }
+
         return repairCompanyService.addRepairCompany(rc);
     }
 

@@ -42,7 +42,7 @@ public class RepairOrderService {
         if (Strings.isNotBlank(o.getOrderUserOpenId()))
         {
             logger.info("保存工单中...");
-            o.setOrderId("R"+o.getOrderCompanyId()+ RandomUtil.randomInt(10000,99999));
+         /*   o.setOrderId("R"+o.getOrderCompanyId()+ RandomUtil.randomInt(10000,99999));*/
             o.setOrderStatus("0");
             JSONObject  jsonObject=  JSONUtil.parseObj(o);
             logger.info(jsonObject.toString());
