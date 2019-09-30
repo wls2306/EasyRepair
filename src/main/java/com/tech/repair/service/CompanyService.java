@@ -1,5 +1,6 @@
 package com.tech.repair.service;
 
+import cn.hutool.core.util.RandomUtil;
 import com.tech.repair.po.Company;
 import com.tech.repair.repository.CompanyRepository;
 import com.tech.repair.util.getNullPropertyNames;
@@ -11,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 @Transactional
 @Service
 public class CompanyService {
@@ -24,7 +29,12 @@ public class CompanyService {
 
     public Company saveCompany(Company c)
     {
-        c.setId(0);
+
+
+
+        logger.info("随机分配的单位编号："+c.getCompanyId());
+
+
         if (c!=null)
         {
             return companyRepository.save(c);
@@ -97,6 +107,24 @@ public class CompanyService {
     }
 
     /**
+     * @Author:Wls
+     * @Date:8:51 2019/9/25
+     * @Description:
+     */
+    public Company getCompanyByCompanyHost(String companyHost)
+    {
+        if (Strings.isNotBlank(companyHost)) {
+            return companyRepository.findByCompanyHost(companyHost);
+        }else
+        {
+            logger.warn("companyHost参数错误！");
+            return null;
+        }
+    }
+
+
+
+    /**
     * @Author: Wls
     * @Date: 0:07 2019/9/8
     * @Description: 删除单位
@@ -107,13 +135,16 @@ public class CompanyService {
          * 执行此操作后，数据库中所有与CompanyId 相同的数据均会被删除！
          */
         if (Strings.isNotBlank(companyId))
-            return companyRepository.deleteByCompanyId(companyId)>0?true:false;
+            return companyRepository.deleteByCompanyId(companyId)>0;
         else
         {
             logger.warn("delete- 参数错误");
             return false;
         }
     }
+
+
+
 
 
 

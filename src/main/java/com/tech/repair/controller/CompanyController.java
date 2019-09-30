@@ -1,5 +1,6 @@
 package com.tech.repair.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import com.tech.repair.po.Company;
 import com.tech.repair.service.CompanyService;
 import com.tech.repair.util.UploadPathUtil;
@@ -8,11 +9,14 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Api(tags = "单位模块")
@@ -45,20 +49,32 @@ public class CompanyController {
      * 同时若信息中包含图片，则处理上传图片
      */
     @PostMapping("/")
-    @ApiOperation(value = "新建单位记录",notes = " 前端form属性需要为： enctype=\"multipart/form-data\" ")
+    @ApiOperation(value = "新建单位记录",notes = " 前端form属性需要为： enctype=\"multipart/form-data\" 单位编号不要填，自动生成，填了也没用！")
     public Company createCompany(HttpServletRequest req,Company c, MultipartFile[] files)throws Exception
     {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+
+        String companyId=sdf.format(new Date())+ RandomUtil.randomInt(1000,9999);
+
+        c.setCompanyId(companyId);
+
         if (files!=null)
         {
             String imgPath="";
             for (int i=0;i<files.length;i++)
             {
                 MultipartFile file=files[i];
+
+                String classPath= ClassUtils.getDefaultClassLoader().getResource("").getPath();
+
+                String path= classPath+"static\\images\\company\\";
+
+
                 /**
                  *  上传路径为
-                 *  images/company/{companyId}/{companyId}-{i}.jpg
+                 *  images/company/{companyId}/{i}.jpg
                  */
-                String filepath= req.getSession().getServletContext().getRealPath("/")+"images\\company\\"+c.getCompanyId()+"\\"+c.getCompanyId()+"-"+i+".jpg";
+                String filepath= path+companyId+"/";
                 /**
                  * 由于 Linux系统与 Windows系统的文件目录符号不同
                  * 因此 UploadPathUtil 会根据操作系统对上传路径Path进行转化
@@ -68,22 +84,22 @@ public class CompanyController {
                 /**
                  * 保存文件
                  */
-                File file1=new File(filepath);
-                if (!file1.exists()) {
-                    file1.mkdirs();
+                File rs=new File(filepath,i+".jpg");
+                if (!rs.exists()) {
+                    rs.mkdirs();
                 }
 
-                file.transferTo(new File(filepath));
+                file.transferTo(rs);
 
                 /**
                  * 存入数据库的path 为url格式即可
                  */
-                String path="image/company/"+c.getCompanyId()+"/"+c.getCompanyId()+"-"+i+".jpg";
+
 
                 /**
                  * 若有多张图片则路径之间使用 ；分隔
                  */
-                imgPath+=path+";";
+                imgPath+="/images/company/"+companyId+"/"+i+",jpg;";
             }
             c.setCompanyImage(imgPath);
             return (Company)companyService.saveCompany(c);
@@ -117,6 +133,21 @@ public class CompanyController {
     {
         return (Company) companyService.getCompany(companyId);
     }
+
+
+    /**
+     * @Author:Wls
+     * @Date:8:55 2019/9/25
+     * @Description: 根据单位负责人获取单位
+     */
+    @GetMapping("/host")
+    @ApiOperation(value = "根据单位负责人获取单位")
+    public Company getCompanyByCompanyHost(String companyHost)
+    {
+        return companyService.getCompanyByCompanyHost(companyHost);
+    }
+
+
     /**
      * @Author:Wls
      * @Date:15:22 2019/9/6

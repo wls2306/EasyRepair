@@ -98,6 +98,22 @@ public class UserController {
 
 
 
+    @PostMapping("/dologin")
+    @ApiOperation(value = "通过邮箱和密码进行登录操作，返回用户对象或null")
+    public User loginByEmailAndPwd(String userEmail,String password)
+    {
+        return userService.findUserByEmailAndPwd(userEmail, password);
+    }
+
+
+
+    @GetMapping("/email")
+    @ApiOperation(value = "根据用户Email获取用户信息")
+    public User getUserByUserEmail(String userEmail)
+    {
+        return userService.getUserByEmail(userEmail);
+    }
+
 
 
   /*  @PutMapping("/{openId}")

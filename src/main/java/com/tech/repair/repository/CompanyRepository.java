@@ -15,4 +15,6 @@ public interface CompanyRepository extends JpaRepository<Company,Integer> {
 
     int deleteByCompanyId(String companyId);
 
+    Company findByCompanyHost(String companyHost);
+
 }

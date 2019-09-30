@@ -41,6 +41,7 @@ public class RegisterInfoService {
     */
     public RegisterInfo addRegisterInfo(RegisterInfo ri)throws Exception
     {
+        ri.setRegisterStatus("0");
         if (Strings.isNotBlank(ri.getCompanyId())&&Strings.isNotBlank(ri.getOpenId())) {
             ObjectMapper mapper=new ObjectMapper();
             logger.info("add RI --{{}}",mapper.writeValueAsString(ri));
@@ -117,6 +118,20 @@ public class RegisterInfoService {
             return null;
         }
     }
+
+    public RegisterInfo findByCompanyIdAndUserOpenId(String companyId,String openId)
+    {
+        if (Strings.isNotEmpty(companyId)&&Strings.isNotEmpty(openId))
+        {
+           return registerInfoRepository.findByCompanyIdAndOpenId(companyId, openId);
+        }else
+        {
+            logger.warn("通过 单位编号和openId查找失败，参数为空");
+            return null;
+        }
+    }
+
+
 
 
     /**

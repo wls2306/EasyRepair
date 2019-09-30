@@ -7,11 +7,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@ApiModel(value = "com.tech.repair.po.Order")
+@ApiModel(value = "com.tech.repair.po.RepairOrder")
 @Data
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "repair_order")
+public class RepairOrder {
     /**
      * 自增id
      */
@@ -97,7 +97,7 @@ public class Order {
      * 工单创建时间
      */
     @ApiModelProperty(value = "工单创建时间")
-    private Date orderCreateTime;
+    private String orderCreateTime;
 
     /**
      * 工单状态（-1.驳回 0.未处理 1.处理中 2.已完成）
