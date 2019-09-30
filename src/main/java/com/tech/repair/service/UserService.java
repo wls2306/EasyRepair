@@ -110,7 +110,7 @@ public class UserService {
          * @Date:12:36 2019/9/6
          * @Description: 添加新用户
          */
-        if (Strings.isNotBlank(user.getUserOpenId()))
+        if (Strings.isNotBlank(user.getUserOpenId())||Strings.isNotBlank(user.getUserEmail()))
         {
             ObjectMapper mapper=new ObjectMapper();
             logger.info("添加新用户："+mapper.writeValueAsString(user));
