@@ -110,15 +110,11 @@ public class UserService {
          * @Date:12:36 2019/9/6
          * @Description: 添加新用户
          */
-        if (Strings.isNotBlank(user.getUserOpenId()))
-        {
+
             ObjectMapper mapper=new ObjectMapper();
             logger.info("添加新用户："+mapper.writeValueAsString(user));
            return userRepository.save(user);
-        }else {
-            logger.error(" 添加新用户-用户对象为空！");
-            return null;
-        }
+
     }
 
     public boolean updateUserCompanyByUserOpenId(String companyId,String openId)
