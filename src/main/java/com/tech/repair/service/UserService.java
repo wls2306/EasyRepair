@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Transactional
 @Service
@@ -189,8 +190,13 @@ public class UserService {
          */
         logger.info("更新用户信息");
 
-        if (Strings.isNotBlank(u.getUserOpenId())) {
-            User oldUser=(User)getUser(u.getUserOpenId());
+        if (Strings.isNotBlank(u.getUserOpenId())||Strings.isNotBlank(u.getUserEmail())) {
+            /**
+            * @Author: Wls
+            * @Date: 10:44 2019/10/6
+            * @Description: 根据Email或OpenId任意一项修改用户信息
+            */
+            User oldUser=Strings.isBlank(u.getUserOpenId())?getUserByEmail(u.getUserEmail()):(User)getUser(u.getUserOpenId());
             BeanUtils.copyProperties(u,oldUser, getNullPropertyNames.getNullPropertyNames(u));
             ObjectMapper mapper=new ObjectMapper();
             System.out.println(mapper.writeValueAsString(oldUser));
@@ -235,6 +241,20 @@ public class UserService {
         } else
         {
             logger.warn("用户邮箱登录-参数为空");
+            return null;
+        }
+    }
+
+    /**
+    * @Author: Wls
+    * @Date: 10:40 2019/10/6
+    * @Description: 根据单位查找用户
+    */
+    public List<User> findUserByCompanyId(String userCompanyId){
+        if (Strings.isNotBlank(userCompanyId)) {
+            return userRepository.findAllByUserCompanyId(userCompanyId);
+        }else {
+            logger.warn("根据单位查找用户-参数错误");
             return null;
         }
     }

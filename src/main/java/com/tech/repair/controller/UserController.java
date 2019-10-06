@@ -35,9 +35,9 @@ public class UserController {
     }
 
 
-    @GetMapping("/{openId}")
+    @GetMapping("/openid")
     @ApiOperation(value = "根据openID获取用户")
-    public User getUserByOpenId(@PathVariable("openId")String openId)
+    public User getUserByOpenId(String openId)
     {
         /**
          * @Author:Wls
@@ -46,6 +46,18 @@ public class UserController {
          */
         logger.info("根据openid获取用户");
         return (User) userService.getUser(openId);
+    }
+
+    /**
+    * @Author: Wls
+    * @Date: 10:48 2019/10/6
+    * @Description: 根据单位编号获取用户
+    */
+    @GetMapping("/company")
+    @ApiOperation(value = "根据单位编号获取用户")
+    public List<User> getUserByCompanyId(String companyId){
+        logger.info("根据单位编号获取用户");
+        return userService.findUserByCompanyId(companyId);
     }
 
     @PostMapping("/login")
@@ -75,7 +87,7 @@ public class UserController {
     }
 
     @PutMapping("/")
-    @ApiOperation(value = "更新用户信息")
+    @ApiOperation(value = "更新用户信息" ,notes = "根据Email或OpenId任意一项修改用户信息")
     public User updateUser(User user)throws Exception
     {
         /**
