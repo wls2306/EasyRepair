@@ -54,7 +54,7 @@ public class UserController {
     * @Description: 根据单位编号获取用户
     */
     @GetMapping("/company")
-    @ApiOperation(value = "根据单位编号获取用户")
+    @ApiOperation(value = "根据单位编号获取用户",notes = "根据userbelong中的companyId获取")
     public List<User> getUserByCompanyId(String companyId){
         logger.info("根据单位编号获取用户");
         return userService.findUserByCompanyId(companyId);
