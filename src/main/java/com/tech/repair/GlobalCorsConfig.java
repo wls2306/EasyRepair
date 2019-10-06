@@ -20,7 +20,6 @@ public class GlobalCorsConfig {
       //  config.addExposedHeader("*");
         UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
         configSource.registerCorsConfiguration("/**", config);
-
         return new CorsFilter(configSource);
     }
 }

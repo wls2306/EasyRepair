@@ -252,7 +252,7 @@ public class UserService {
     */
     public List<User> findUserByCompanyId(String userCompanyId){
         if (Strings.isNotBlank(userCompanyId)) {
-            return userRepository.findAllByUserCompanyId(userCompanyId);
+            return userRepository.findAllByUserBelong(userCompanyId);
         }else {
             logger.warn("根据单位查找用户-参数错误");
             return null;
