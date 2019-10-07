@@ -29,7 +29,7 @@ public class GoodsService {
     */
     public Goods addGood(Goods g)throws Exception
     {
-        if (Strings.isNotBlank(g.getGoodsCompanyId())) {
+        if (Strings.isNotBlank(g.getGoodsCompanyId())&&Strings.isNotBlank(g.getGoodsId())) {
             ObjectMapper mapper=new ObjectMapper();
             logger.info("新增物品：{{}}",mapper.writeValueAsString(g));
             return goodsRepository.save(g);

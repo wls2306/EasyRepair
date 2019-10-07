@@ -90,13 +90,6 @@ public class UserController {
     @ApiOperation(value = "更新用户信息" ,notes = "根据Email或OpenId任意一项修改用户信息")
     public User updateUser(User user)throws Exception
     {
-        /**
-         * @Author:Wls
-         * @Date:13:10 2019/9/6
-         * @Description: 更新用户信息
-         */
-
-
         logger.info("更新用户");
         return (User) userService.updateUser(user);
     }
@@ -109,6 +102,13 @@ public class UserController {
     }
 
 
+    @DeleteMapping("/email")
+    @ApiOperation(value = "根据邮箱删除用户")
+    public boolean deleteUserByEmail(String userEmail){
+        return userService.deleteUserByUserEmail(userEmail);
+    }
+
+
 
     @PostMapping("/dologin")
     @ApiOperation(value = "通过邮箱和密码进行登录操作，返回用户对象或null")
@@ -116,8 +116,6 @@ public class UserController {
     {
         return userService.findUserByEmailAndPwd(userEmail, password);
     }
-
-
 
     @GetMapping("/email")
     @ApiOperation(value = "根据用户Email获取用户信息")

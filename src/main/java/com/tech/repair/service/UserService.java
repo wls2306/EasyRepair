@@ -259,5 +259,19 @@ public class UserService {
         }
     }
 
+    /**
+    * @Author: Wls
+    * @Date: 11:02 2019/10/7
+    * @Description: 根据邮箱删除用户
+    */
+    public boolean deleteUserByUserEmail(String userEmail){
+        if (Strings.isNotBlank(userEmail)) {
+            return userRepository.deleteByUserEmail(userEmail) > 0;
+        }else {
+            logger.warn("根据邮箱删除用户-参数错误");
+            return false;
+        }
+    }
+
 
 }

@@ -20,6 +20,12 @@ public class Goods {
     private Integer id;
 
     /**
+     * 物品编号
+     */
+    @ApiModelProperty(value = "物品编号")
+    private String goodsId;
+
+    /**
      * 所属单位
      */
     @ApiModelProperty(value = "所属单位")
