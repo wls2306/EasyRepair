@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Transactional
 @Service
@@ -110,15 +111,11 @@ public class UserService {
          * @Date:12:36 2019/9/6
          * @Description: 添加新用户
          */
-        if (Strings.isNotBlank(user.getUserOpenId()))
-        {
+
             ObjectMapper mapper=new ObjectMapper();
             logger.info("添加新用户："+mapper.writeValueAsString(user));
            return userRepository.save(user);
-        }else {
-            logger.error(" 添加新用户-用户对象为空！");
-            return null;
-        }
+
     }
 
     public boolean updateUserCompanyByUserOpenId(String companyId,String openId)
@@ -193,8 +190,13 @@ public class UserService {
          */
         logger.info("更新用户信息");
 
-        if (Strings.isNotBlank(u.getUserOpenId())) {
-            User oldUser=(User)getUser(u.getUserOpenId());
+        if (Strings.isNotBlank(u.getUserOpenId())||Strings.isNotBlank(u.getUserEmail())) {
+            /**
+            * @Author: Wls
+            * @Date: 10:44 2019/10/6
+            * @Description: 根据Email或OpenId任意一项修改用户信息
+            */
+            User oldUser=Strings.isBlank(u.getUserOpenId())?getUserByEmail(u.getUserEmail()):(User)getUser(u.getUserOpenId());
             BeanUtils.copyProperties(u,oldUser, getNullPropertyNames.getNullPropertyNames(u));
             ObjectMapper mapper=new ObjectMapper();
             System.out.println(mapper.writeValueAsString(oldUser));
@@ -240,6 +242,34 @@ public class UserService {
         {
             logger.warn("用户邮箱登录-参数为空");
             return null;
+        }
+    }
+
+    /**
+    * @Author: Wls
+    * @Date: 10:40 2019/10/6
+    * @Description: 根据单位查找用户
+    */
+    public List<User> findUserByCompanyId(String userCompanyId){
+        if (Strings.isNotBlank(userCompanyId)) {
+            return userRepository.findAllByUserBelong(userCompanyId);
+        }else {
+            logger.warn("根据单位查找用户-参数错误");
+            return null;
+        }
+    }
+
+    /**
+    * @Author: Wls
+    * @Date: 11:02 2019/10/7
+    * @Description: 根据邮箱删除用户
+    */
+    public boolean deleteUserByUserEmail(String userEmail){
+        if (Strings.isNotBlank(userEmail)) {
+            return userRepository.deleteByUserEmail(userEmail) > 0;
+        }else {
+            logger.warn("根据邮箱删除用户-参数错误");
+            return false;
         }
     }
 

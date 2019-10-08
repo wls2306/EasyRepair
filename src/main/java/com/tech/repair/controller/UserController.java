@@ -35,9 +35,9 @@ public class UserController {
     }
 
 
-    @GetMapping("/{openId}")
+    @GetMapping("/openid")
     @ApiOperation(value = "根据openID获取用户")
-    public User getUserByOpenId(@PathVariable("openId")String openId)
+    public User getUserByOpenId(String openId)
     {
         /**
          * @Author:Wls
@@ -46,6 +46,18 @@ public class UserController {
          */
         logger.info("根据openid获取用户");
         return (User) userService.getUser(openId);
+    }
+
+    /**
+    * @Author: Wls
+    * @Date: 10:48 2019/10/6
+    * @Description: 根据单位编号获取用户
+    */
+    @GetMapping("/company")
+    @ApiOperation(value = "根据单位编号获取用户",notes = "根据userbelong中的companyId获取")
+    public List<User> getUserByCompanyId(String companyId){
+        logger.info("根据单位编号获取用户");
+        return userService.findUserByCompanyId(companyId);
     }
 
     @PostMapping("/login")
@@ -75,16 +87,9 @@ public class UserController {
     }
 
     @PutMapping("/")
-    @ApiOperation(value = "更新用户信息")
+    @ApiOperation(value = "更新用户信息" ,notes = "根据Email或OpenId任意一项修改用户信息")
     public User updateUser(User user)throws Exception
     {
-        /**
-         * @Author:Wls
-         * @Date:13:10 2019/9/6
-         * @Description: 更新用户信息
-         */
-
-
         logger.info("更新用户");
         return (User) userService.updateUser(user);
     }
@@ -97,6 +102,13 @@ public class UserController {
     }
 
 
+    @DeleteMapping("/email")
+    @ApiOperation(value = "根据邮箱删除用户")
+    public boolean deleteUserByEmail(String userEmail){
+        return userService.deleteUserByUserEmail(userEmail);
+    }
+
+
 
     @PostMapping("/dologin")
     @ApiOperation(value = "通过邮箱和密码进行登录操作，返回用户对象或null")
@@ -104,8 +116,6 @@ public class UserController {
     {
         return userService.findUserByEmailAndPwd(userEmail, password);
     }
-
-
 
     @GetMapping("/email")
     @ApiOperation(value = "根据用户Email获取用户信息")
