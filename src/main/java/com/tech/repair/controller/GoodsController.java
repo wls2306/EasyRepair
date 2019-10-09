@@ -37,7 +37,7 @@ public class GoodsController {
         return goodsService.findGoodsByCompanyId(companyId);
     }
 
-    @ApiOperation(value = "更新物品信息",notes = "不更新项留空，物品编号必填")
+    @ApiOperation(value = "更新物品信息",notes = "不更新项留空，物品编号(GoodsId)必填")
     @PutMapping("/")
     public Goods updateGoods(Goods g){
         return goodsService.updateGoods(g);

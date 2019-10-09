@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,6 +47,8 @@ public class RepairOrderService {
          /*   o.setOrderId("R"+o.getOrderCompanyId()+ RandomUtil.randomInt(10000,99999));*/
             o.setOrderStatus("0");
             JSONObject  jsonObject=  JSONUtil.parseObj(o);
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            o.setOrderCreateTime(sdf.format(new Date()));
             logger.info(jsonObject.toString());
             return repairOrderRepository.save(o);
         }else

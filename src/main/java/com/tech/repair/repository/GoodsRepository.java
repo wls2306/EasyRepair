@@ -10,7 +10,11 @@ import java.util.List;
 public interface GoodsRepository extends JpaRepository<Goods,Integer> {
     Goods findAllById(String id);
 
+    Goods findAllByGoodsId(String goodsId);
+
     List<Goods> findAllByGoodsCompanyId(String goodsCompanyId);
 
     int deleteById(String id);
+
+    int deleteByGoodsId(String goodsId);
 }

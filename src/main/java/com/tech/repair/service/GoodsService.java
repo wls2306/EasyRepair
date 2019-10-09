@@ -46,8 +46,8 @@ public class GoodsService {
      */
     public Goods updateGoods(Goods g)
     {
-        if (Strings.isNotBlank(g.getId()+"")) {
-            Goods oldGoods=findGoodsById(g.getId()+"");
+        if (Strings.isNotBlank(g.getGoodsId()+"")) {
+            Goods oldGoods=goodsRepository.findAllByGoodsId(g.getGoodsId());
             BeanUtils.copyProperties(g,oldGoods, getNullPropertyNames.getNullPropertyNames(g));
             return goodsRepository.save(oldGoods);
         }else {
@@ -64,7 +64,7 @@ public class GoodsService {
     public Goods findGoodsById(String id)
     {
         if (Strings.isNotBlank(id)) {
-            return goodsRepository.findAllById(id);
+            return goodsRepository.findAllByGoodsId(id);
         }else
         {
             logger.warn("根据id 查找物品：参数错误");
@@ -94,7 +94,7 @@ public class GoodsService {
     */
     public boolean deleteGoodsById(String id){
         if (Strings.isNotBlank(id)) {
-            return goodsRepository.deleteById(id) > 0;
+            return goodsRepository.deleteByGoodsId(id)>0;
         }else {
             logger.warn("删除物品-参数错误");
             return false;
