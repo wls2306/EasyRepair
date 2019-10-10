@@ -60,6 +60,17 @@ public class UserController {
         return userService.findUserByCompanyId(companyId);
     }
 
+    /**
+     * @Author:Wls
+     * @Date:19:30 2019/10/9
+     * @Description: 根据用户权限获取用户
+     */
+    @GetMapping("/role")
+    @ApiOperation(value = "根据用户角色获取用户",notes = "用户角色（1.用户 2.维修员 3.管理员）")
+    public List<User> getUserByUserRole(String userRole){
+        return userService.findByUserRole(userRole);
+    }
+
     @PostMapping("/login")
     @ApiOperation(value = "微信登录",notes = "成功则返回openid，失败请查看errmsg")
     public String WXlogin(String js_code)

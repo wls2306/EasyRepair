@@ -45,7 +45,7 @@ public class RepairOrderController {
         if (files !=null)
         {
             for (MultipartFile file : files) {
-
+                repairOrder.setOrderCreateTime(DateUtil.now());
                 int i=0;
 
                 String staticPath= ClassUtils.getDefaultClassLoader().getResource("").getPath();
@@ -63,9 +63,6 @@ public class RepairOrderController {
                 String filepath= UploadPathUtil.getAbsolutePath(path);
 
                 File rs=new File(filepath,i+".jpg");
-                    /*if (!rs.exists()) {
-                        rs.mkdirs();
-                    }*/
 
                     file.transferTo(rs);
                     imageUrl+="images/repair_order/"+repairOrderId+"/"+i+".jpg;";
@@ -73,7 +70,7 @@ public class RepairOrderController {
             }
         }
         repairOrder.setOrderImage(imageUrl);
-        repairOrder.setOrderCreateTime(DateUtil.now());
+
         return repairOrderService.addOrder(repairOrder);
     }
 

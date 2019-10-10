@@ -259,6 +259,22 @@ public class UserService {
         }
     }
 
+
+    /**
+     * @Author:Wls
+     * @Date:19:28 2019/10/9
+     * @Description: 根据用户权限查询用户
+     */
+    public List<User> findByUserRole(String userRole)
+    {
+        if (Strings.isNotBlank(userRole)) {
+            return userRepository.findByUserRole(userRole);
+        }else {
+            logger.warn("根据用户权限查询用户-参数错误");
+            return null;
+        }
+    }
+
     /**
     * @Author: Wls
     * @Date: 11:02 2019/10/7

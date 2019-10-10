@@ -89,7 +89,7 @@ public class OrderVo {
      * 发起者姓名
      */
     @ApiModelProperty(value = "发起者姓名")
-    private String oederUserName;
+    private String orderUserName;
 
     /**
      * 发起者联系方式
@@ -137,13 +137,49 @@ public class OrderVo {
      * 工单创建时间
      */
     @ApiModelProperty(value = "工单创建时间")
-    private Date orderCreateTime;
+    private String orderCreateTime;
 
     /**
      * 工单状态（-1.驳回 0.未处理 1.处理中 2.已完成）
      */
     @ApiModelProperty(value = "工单状态（-1.驳回 0.未处理 1.处理中 2.已完成）")
     private String orderStatus;
+
+    /**
+     * 物品编号
+     */
+    @ApiModelProperty(value = "物品编号")
+    private String goodsId;
+
+    /**
+     * 所属单位
+     */
+    @ApiModelProperty(value = "所属单位")
+    private String goodsCompanyId;
+
+    /**
+     * 物品名称
+     */
+    @ApiModelProperty(value = "物品名称")
+    private String goodsName;
+
+    /**
+     * 物品描述（220字以内）
+     */
+    @ApiModelProperty(value = "物品描述（220字以内）")
+    private String goodsDetail;
+
+    /**
+     * 物品价值
+     */
+    @ApiModelProperty(value = "物品价值")
+    private String goodsPrice;
+
+    /**
+     * 物品图片（单张）
+     */
+    @ApiModelProperty(value = "物品图片（单张）")
+    private String goodsImage;
 
 
 }

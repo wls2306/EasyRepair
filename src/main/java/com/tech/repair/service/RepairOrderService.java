@@ -1,15 +1,18 @@
 package com.tech.repair.service;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.tech.repair.po.Company;
+import com.tech.repair.po.Goods;
 import com.tech.repair.po.RepairOrder;
 import com.tech.repair.po.User;
 import com.tech.repair.repository.RepairOrderRepository;
 import com.tech.repair.util.getNullPropertyNames;
 import com.tech.repair.vo.OrderVo;
 import org.apache.logging.log4j.util.Strings;
+import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +34,8 @@ public class RepairOrderService {
     private UserService userService;
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private GoodsService goodsService;
 
     private final Logger logger= LoggerFactory.getLogger(getClass());
 
@@ -47,8 +52,7 @@ public class RepairOrderService {
          /*   o.setOrderId("R"+o.getOrderCompanyId()+ RandomUtil.randomInt(10000,99999));*/
             o.setOrderStatus("0");
             JSONObject  jsonObject=  JSONUtil.parseObj(o);
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            o.setOrderCreateTime(sdf.format(new Date()));
+            o.setOrderCreateTime(DateUtil.now());
             logger.info(jsonObject.toString());
             return repairOrderRepository.save(o);
         }else
@@ -151,15 +155,23 @@ public class RepairOrderService {
     private List<OrderVo> doMix(List<RepairOrder> repairOrderList)
     {
         List<OrderVo> result=new ArrayList<>();
-       if (repairOrderList !=null) {
+       if (repairOrderList.size()>0) {
            for (RepairOrder repairOrder : repairOrderList) {
+
+               OrderVo orderVo=new OrderVo();
                User u = (User) userService.getUser(repairOrder.getOrderUserOpenId());
                Company c = (Company) companyService.getCompany(repairOrder.getOrderCompanyId());
-               OrderVo orderVo = new OrderVo();
+               if (Strings.isNotBlank(repairOrder.getOrderGoodsId())) {
+                   Goods g=(Goods) goodsService.findGoodsById(repairOrder.getOrderGoodsId());
+                   BeanUtils.copyProperties(g,orderVo);
+               }
                BeanUtils.copyProperties(u, orderVo);
                BeanUtils.copyProperties(c, orderVo);
+
                BeanUtils.copyProperties(repairOrder, orderVo);
                result.add(orderVo);
+
+
            }
            return result;
        }else
@@ -181,8 +193,13 @@ public class RepairOrderService {
             OrderVo result = new OrderVo();
             User u = (User) userService.getUser(repairOrder.getOrderUserOpenId());
             Company c = (Company) companyService.getCompany(repairOrder.getOrderCompanyId());
+            if (Strings.isNotBlank(repairOrder.getOrderGoodsId())) {
+                Goods g=(Goods) goodsService.findGoodsById(repairOrder.getOrderGoodsId());
+                BeanUtils.copyProperties(g,result);
+            }
             BeanUtils.copyProperties(u, result);
             BeanUtils.copyProperties(c, result);
+
             BeanUtils.copyProperties(repairOrder, result);
             return result;
         } else {
